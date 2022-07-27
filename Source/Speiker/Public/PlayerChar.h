@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilityComponent.h"
 #include "DamageSources.h"
 #include "WeaponComponent.h"
 #include "Camera/CameraComponent.h"
@@ -33,6 +34,9 @@ class SPEIKER_API APlayerChar : public ACharacter
 	UPROPERTY(VisibleAnywhere)
 	UAudioComponent* WeaponAudioComponent;
 
+	UPROPERTY(VisibleAnywhere)
+	UAbilityComponent* AbilityComponent;
+
 public:
 	// Sets default values for this character's properties
 	APlayerChar();
@@ -40,7 +44,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-protected:
+	
 	/////// Camera Settings ///////
 	/// Mouse Sensitivity
 	UPROPERTY(EditAnywhere)
@@ -94,6 +98,11 @@ protected:
 	void StopShooting();
 	UFUNCTION(BlueprintCallable)
 	void ReloadWeapon();
+	
+	UFUNCTION(BlueprintCallable)
+	void UseAbility1();
+	UFUNCTION(BlueprintCallable)
+	void UseAbility2();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool PlayingNow{false};
@@ -113,6 +122,10 @@ public:
 
 	// Returns Weapon Audio Component
 	UAudioComponent* GetWeaponAudioComponent() const { return WeaponAudioComponent; }
+
+	// Returns Ability Component
+	UFUNCTION(BlueprintCallable)
+	UAbilityComponent* GetAbilityComponent() const { return AbilityComponent; }
 
 	// Returns Camera
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }

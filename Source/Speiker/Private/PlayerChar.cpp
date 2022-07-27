@@ -42,6 +42,9 @@ APlayerChar::APlayerChar()
 	WeaponAudioComponent->bCanPlayMultipleInstances = true;
 	WeaponAudioComponent->AttenuationSettings = WeaponComponent->WeaponAudioAttenuation;
 	WeaponAudioComponent->bAutoManageAttachment = false;
+
+	// Add Ability Component
+	AbilityComponent = CreateDefaultSubobject<UAbilityComponent>(TEXT("Ability Component"));
 }
 
 // Called when the game starts or when spawned
@@ -108,6 +111,10 @@ void APlayerChar::SetupPlayerInputComponent(class UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAction("Fire Weapon", IE_Pressed, this, &APlayerChar::StartShooting);
 	PlayerInputComponent->BindAction("Fire Weapon", IE_Released, this, &APlayerChar::StopShooting);
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &APlayerChar::ReloadWeapon);
+
+	// Ability Input
+	PlayerInputComponent->BindAction("Ability 1", IE_Pressed, this, &APlayerChar::UseAbility1);
+	PlayerInputComponent->BindAction("Ability 2", IE_Pressed, this, &APlayerChar::UseAbility2);
 }
 
 void APlayerChar::MoveForward(float Value)
@@ -182,3 +189,12 @@ void APlayerChar::StopShooting()
 	WeaponComponent->EndShootInput();
 }
 
+void APlayerChar::UseAbility1()
+{
+	AbilityComponent->UseAbility1();
+}
+
+void APlayerChar::UseAbility2()
+{
+	AbilityComponent->UseAbility2();
+}

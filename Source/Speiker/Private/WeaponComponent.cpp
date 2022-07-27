@@ -130,7 +130,7 @@ void UWeaponComponent::TraceShot()
 	FVector end = ((forwardVector * 10000.0f) + start);
 	FCollisionQueryParams collisionParams;
 	
-	DrawDebugLine(GetWorld(), start, end, FColor::Red, false, FireRate * FireRateMultiplier * 3.0f);
+	//DrawDebugLine(GetWorld(), start, end, FColor::Red, false, FireRate * FireRateMultiplier * 3.0f);
 
 	bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, collisionParams);
 	if (isHit)

@@ -5,6 +5,8 @@
 
 #include "PlayerChar.h"
 #include "Components/AudioComponent.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 UWeaponComponent::UWeaponComponent()
 {
@@ -139,6 +141,9 @@ void UWeaponComponent::TraceShot()
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, FString::Printf(TEXT("Hit Actor With Name: %s"),
 			*outHit.GetActor()->GetName()));
+
+			//UNiagaraComponent* NiagaraComp = UNiagaraFunctionLibrary::SpawnSystemAttached(myOwningCharacter->GetNiagaraFireSystem(), myOwningCharacter->GetMeshWeapon1P(), NAME_None, FVector(0.0f, -15.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
+			//NiagaraComp->SetNiagaraVariablePosition(FString("Beam End"), outHit.ImpactPoint);
 		}
 	}
 

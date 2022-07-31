@@ -9,7 +9,6 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
 #include "PlayerChar.generated.h"
-
 UCLASS()
 class SPEIKER_API APlayerChar : public ACharacter
 {
@@ -36,6 +35,9 @@ class SPEIKER_API APlayerChar : public ACharacter
 
 	UPROPERTY(VisibleAnywhere)
 	UAbilityComponent* AbilityComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	UNiagaraComponent* NiagaraComponent;
 
 public:
 	// Sets default values for this character's properties
@@ -106,6 +108,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool PlayingNow{false};
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UNiagaraSystem* FireEffect;
 	
 	// APawn interface
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
@@ -126,6 +131,14 @@ public:
 	// Returns Ability Component
 	UFUNCTION(BlueprintCallable)
 	UAbilityComponent* GetAbilityComponent() const { return AbilityComponent; }
+
+	// Returns Niagara Component
+	UFUNCTION(BlueprintCallable)
+	UNiagaraComponent* GetNiagaraComponent() const { return NiagaraComponent; }
+
+	// Returns Niagara System
+	UFUNCTION(BlueprintCallable)
+	UNiagaraSystem* GetNiagaraFireSystem() const { return FireEffect; }
 
 	// Returns Camera
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }

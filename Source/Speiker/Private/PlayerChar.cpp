@@ -14,21 +14,25 @@ APlayerChar::APlayerChar()
 	// Create a CameraComponent	
 	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
 	FirstPersonCameraComponent->SetupAttachment(GetCapsuleComponent());
-	FirstPersonCameraComponent->SetRelativeLocation(FVector(-39.56f, 1.75f, 64.f)); // Position the camera
+	FirstPersonCameraComponent->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
+	FirstPersonCameraComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 64.0f));
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
-
+	
 	// Create the first person mesh
 	MeshCharacter1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
 	MeshCharacter1P->SetOnlyOwnerSee(true);
 	MeshCharacter1P->SetupAttachment(FirstPersonCameraComponent);
 	MeshCharacter1P->bCastDynamicShadow = true;
 	MeshCharacter1P->CastShadow = true;
-	MeshCharacter1P->SetRelativeRotation(FRotator(1.9f, -19.19f, 5.2f));
-	MeshCharacter1P->SetRelativeLocation(FVector(-0.5f, -4.4f, -155.7f));
+	MeshCharacter1P->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
+	MeshCharacter1P->SetRelativeLocation(FVector(0.0f, 0.0f, -160.0f));
 
 	// Create the weapon mesh
 	MeshWeapon1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh1P"));
 	MeshWeapon1P->SetOnlyOwnerSee(true);
+	MeshWeapon1P->SetupAttachment(MeshCharacter1P);
+	MeshWeapon1P->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
+	MeshWeapon1P->SetRelativeLocation(FVector(-22.6034f, 30.145f, 136.084f));
 	MeshWeapon1P->bCastDynamicShadow = true;
 	MeshWeapon1P->CastShadow = true;
 
@@ -37,11 +41,15 @@ APlayerChar::APlayerChar()
 	WeaponComponent = CreateDefaultSubobject<UWeaponComponent>(TEXT("Weapon Component"));
 	WeaponComponent->InitializeWeapon(*partDamages, 20.0f, 20.0f, true, 1.0f, 20.0f, 2.0f, 0.2f, true);
 
+	// Create the weapon audio
 	WeaponAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("Weapon Audio"));
 	WeaponAudioComponent->bAutoActivate = false;
 	WeaponAudioComponent->bCanPlayMultipleInstances = true;
 	WeaponAudioComponent->AttenuationSettings = WeaponComponent->WeaponAudioAttenuation;
 	WeaponAudioComponent->bAutoManageAttachment = false;
+	WeaponAudioComponent->SetupAttachment(MeshWeapon1P);
+	WeaponAudioComponent->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
+	WeaponAudioComponent->SetRelativeLocation(FVector(0.0f, 30.0f, 10.0f));
 
 	// Add Ability Component
 	AbilityComponent = CreateDefaultSubobject<UAbilityComponent>(TEXT("Ability Component"));
@@ -52,15 +60,7 @@ void APlayerChar::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
-
-	// Attach weapon to hand
-	MeshWeapon1P->AttachToComponent(MeshCharacter1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
-	MeshWeapon1P->SetRelativeLocation(FVector(-2.267020,-0.939935,-0.985463));
-	MeshWeapon1P->SetRelativeRotation(FRotator(-0.000306,-9.106652,9.448061));
-	MeshCharacter1P->SetRelativeLocation(FVector(10.836175,-11.747597,-151.969738));
-	MeshCharacter1P->SetRelativeRotation(FRotator(9.835799,-0.328397,3.213572));
-	WeaponAudioComponent->AttachToComponent(MeshWeapon1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
-	WeaponAudioComponent->SetRelativeLocation(FVector(0.0f, 15.0f, 0.0f));
+	
 	if (WeaponAudioComponent->IsValidLowLevelFast()) {
 		WeaponAudioComponent->SetSound(WeaponComponent->WeaponAudio);
 		WeaponAudioComponent->AttenuationSettings = WeaponComponent->WeaponAudioAttenuation;

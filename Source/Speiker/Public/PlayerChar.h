@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AbilityComponent.h"
 #include "DamageSources.h"
+#include "NiagaraComponent.h"
 #include "WeaponComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
@@ -120,12 +121,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	// Returns Character Mesh 1P
+	UFUNCTION(BlueprintCallable)
 	USkeletalMeshComponent* GetMeshCharacter1P() const { return MeshCharacter1P; }
 
 	// Returns Weapon Mesh 1P
+	UFUNCTION(BlueprintCallable)
 	USkeletalMeshComponent* GetMeshWeapon1P() const { return MeshWeapon1P; }
 
 	// Returns Weapon Audio Component
+	UFUNCTION(BlueprintCallable)
 	UAudioComponent* GetWeaponAudioComponent() const { return WeaponAudioComponent; }
 
 	// Returns Ability Component
@@ -141,6 +145,7 @@ public:
 	UNiagaraSystem* GetNiagaraFireSystem() const { return FireEffect; }
 
 	// Returns Camera
+	UFUNCTION(BlueprintCallable)
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
 };
